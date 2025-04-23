@@ -1,0 +1,3 @@
+Modelo,Estructura,Entradas,Salidas
+GRU,4 embeddings → GRU → concat Edad/Sexo → Dense x3 → softmax,Tokens + Edad + Sexo,"CDM, Tipo, GRD"
+LSTM,4 embeddings → LSTM → concat Edad/Sexo → Dense x3 → softmax,Tokens + Edad + Sexo,"CDM, Tipo, GRD"

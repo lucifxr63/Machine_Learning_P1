@@ -1,0 +1,2 @@
+Modelo,Estructura,Tipo,Entradas,Salidas
+MLP,4 embeddings → flatten → concat Edad/Sexo → Dense x3 → softmax,Multiclase,Tokens + Edad + Sexo,"CDM, Tipo, GRD"

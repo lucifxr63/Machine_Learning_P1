@@ -1,0 +1,4 @@
+Modelo,Tipo,Uso,Ventajas
+Random Forest,Árbol de decisión en conjunto,Multiclase,"Robusto a outliers, bueno con datos mixtos"
+Logistic Regression,Lineal (multinomial),Multiclase,"Rápido, interpretable"
+Extra Trees,Ensemble de árboles aleatorios,Multiclase,"Reduce varianza, rápido entrenamiento"
