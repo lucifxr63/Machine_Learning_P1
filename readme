@@ -1,0 +1,100 @@
+# 📚 Machine_Learning_P1
+
+Proyecto de aprendizaje automático desarrollado para predecir **GRD** (Grupos Relacionados de Diagnóstico) a partir de datos clínicos anonimizados.
+
+---
+
+## 📋 Descripción General
+
+Este proyecto implementa un pipeline completo que abarca:
+
+- 🔹 Preprocesamiento de datos clínicos.
+- 🔹 Tokenización de diagnósticos y procedimientos.
+- 🔹 Entrenamiento de modelos:
+  - Modelos **no neuronales** (Random Forest, Extra Trees, Logistic Regression).
+  - Modelos **neuronales MLP** (Multi-Layer Perceptron).
+  - Modelos **recurrentes GRU y LSTM**.
+- 🔹 Generación de métricas y gráficos:
+  - Loss vs Epochs
+  - Matriz de Confusión
+  - Curvas ROC
+- 🔹 Exportación de modelos entrenados.
+- 🔹 Comparación de predicciones vs valores reales.
+
+---
+
+## 🛠 Tecnologías utilizadas
+
+- **Python 3.10**
+- **TensorFlow / Keras**
+- **Scikit-learn**
+- **Pandas, Numpy**
+- **Matplotlib**
+
+---
+
+## 📂 Estructura del repositorio
+
+```plaintext
+├── DataSets/
+│   └── DataSetTokenizados.csv          # Dataset procesado
+│
+├── graficos_neuronales/
+│   └── (Loss, ROC, Matriz Confusión de MLP)
+│
+├── graficos_rnn/
+│   └── (Loss, ROC, Matriz Confusión de GRU/LSTM)
+│
+├── graficos_no_neuronales/
+│   └── (Gráficos de modelos RandomForest, ExtraTrees, Logistic Regression)
+│
+├── modelo_secuencial/
+│   ├── modelo_CDM_secuencial.h5        # Modelo para CDM
+│   ├── modelo_Tipo_secuencial.h5        # Modelo para Tipo GRD
+│   └── modelo_GRD_secuencial.h5         # Modelo para GRD final
+│
+├── MLP.py                               # Entrenamiento MLP
+├── GRU_Y_LSTM.py                        # Entrenamiento GRU y LSTM
+├── Prueba_no_neuronales.py              # Modelos RandomForest, ExtraTrees, Logistic Regression
+├── LimpiezaDatos.ipynb                  # Notebook de limpieza y análisis inicial
+├── Tokenizacion.ipynb                   # Tokenización de diagnósticos y procedimientos
+├── Pruebas.ipynb                        # Evaluaciones adicionales
+└── README.md
+```
+
+---
+
+## 📈 Metodología de Trabajo
+
+**Preprocesamiento:**
+- Normalización de tokens de diagnóstico y procedimientos principales/secundarios.
+- Creación de variables adicionales (edad, sexo).
+
+**Modelado Secuencial:**
+- Se entrena primero el modelo de **CDM**.
+- Luego el modelo de **Tipo GRD** usando como input la predicción del CDM.
+- Finalmente el modelo de **GRD completo** usando predicción de CDM + Tipo GRD.
+
+**Evaluación:**
+- Reportes de Accuracy, Precision, Recall, F1-Score (macro y weighted).
+- Curvas ROC multicategoría.
+- Gráficos de pérdida durante entrenamiento.
+
+**Exportación:**
+- Guardado de modelos `.h5`.
+- Guardado de clases de LabelEncoder `.npy`.
+- Generación de CSV de predicciones y métricas.
+
+---
+
+## 📊 Resultados esperados
+
+Accuracy en test set para cada tarea:
+
+- 📌 **CDM**: alrededor del **91%**.
+- 📌 **Tipo GRD**: alrededor del **97%**.
+- 📌 **GRD completo**: alrededor del **81%**.
+
+_(Ver detalles en `resultados_mlp.csv` y gráficos asociados.)_
+
+---
