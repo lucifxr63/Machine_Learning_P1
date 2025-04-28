@@ -18,7 +18,9 @@ embedding_dim = 16
 dense_units = 64
 epochs = 10
 batch_size = 128
+
 os.makedirs("graficos_neuronales", exist_ok=True)
+os.makedirs("modelo_final", exist_ok=True)  # <-- Nueva carpeta para guardar modelos
 
 # Cargar dataset
 df = pd.read_csv("DataSets/DataSetTokenizados.csv")
@@ -110,7 +112,7 @@ for nombre_var, y in targets.items():
         "F1 (weighted)": report["weighted avg"]["f1-score"]
     })
 
-    # Matriz de confusión (sólo GRD)
+    # Matriz de confusión
     if nombre_var == "GRD":
         cm = confusion_matrix(y_true, y_pred)
         disp = ConfusionMatrixDisplay(confusion_matrix=cm)
@@ -119,7 +121,7 @@ for nombre_var, y in targets.items():
         plt.savefig(f"graficos_neuronales/confusion_matrix_GRD.png")
         plt.close()
 
-    # Curva ROC multiclase
+    # Curva ROC
     y_test_bin = label_binarize(y_true, classes=list(range(num_classes)))
     fpr, tpr, roc_auc = {}, {}, {}
     plt.figure(figsize=(8, 6))
@@ -140,10 +142,14 @@ for nombre_var, y in targets.items():
     plt.savefig(f"graficos_neuronales/curva_roc_{nombre_var}.png")
     plt.close()
 
-# Guardar CSV resultados
+    # Guardar modelo para esta variable
+    model.save(f"modelo_final/modelo_mlp_{nombre_var}.h5")
+    print(f"✅ Modelo MLP para {nombre_var} guardado en 'modelo_final/'")
+
+# Guardar resultados generales
 pd.DataFrame(resultados).to_csv("resultados_mlp.csv", index=False)
 
-# Gráficos de pérdida
+# Guardar gráficos de pérdida
 for var in targets.keys():
     plt.figure(figsize=(8, 5))
     plt.plot(loss_histories[var], label='Training Loss')
@@ -156,7 +162,7 @@ for var in targets.keys():
     plt.savefig(f"graficos_neuronales/loss_vs_epochs_{var}.png")
     plt.close()
 
-# Guardar descripción del modelo
+# Guardar estructura del modelo
 pd.DataFrame([{
     "Modelo": "MLP",
     "Estructura": "4 embeddings → flatten → concat Edad/Sexo → Dense x3 → softmax",
